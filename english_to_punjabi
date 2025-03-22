@@ -1,0 +1,27 @@
+import googletrans
+import speech_recognition as sr
+import gtts
+import playsound
+r = sr.Recognizer()
+
+recognizer = sr.Recognizer()
+try:
+    with sr.Microphone() as source2:
+          print("say somthing")
+          audio2 = r.listen(source2)
+          text = r.recognize_google(audio2,language ="en")
+          print("your text:",text)
+ 
+    translator= googletrans.Translator()
+    translation = translator.translate(text,dest="pa")
+    print("translation of your text: ",translation.text)
+
+    convert_audio = gtts.gTTS(translation.text, lang="pa")
+    convert_audio.save("hello.mp3")
+
+    playsound.playsound("hello.mp3")
+
+except sr.RequestError as e:
+    print("lol")
+except sr.UnknownValueError:
+    print("lololo")
